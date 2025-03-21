@@ -1,5 +1,6 @@
 #ifndef COMBATABLE_H
 #define COMBATABLE_H
+
 class Character;
 class Combatable {
     public:

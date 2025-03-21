@@ -1,6 +1,7 @@
 #ifndef INTERACTABLE_H
 #define INTERACTABLE_H
 #include <string>
+
 class Character;
 class Interactable {
     public:

@@ -4,17 +4,21 @@
 #include "Interactable.h"
 #include "Combatable.h"
 #include "../inventory/Inventory.h"
-#include "Mount.h"
+#include "../moving/Mount.h"
+#include "QuestManager.h"
 #include <vector>
+
 class Hero : public Character, public Interactable, public Combatable {
     private:
-        Inventory inventory;
-        std::vector<std::string> skills;
-        int experiencePoints;
-        int level;
-        Mount* currentMount;
+        Inventory m_inventory;
+        std::vector<std::string> m_skills;
+        int m_experiencePoints;
+        int m_level = 1;
+        Mount* m_currentMount;
+        QuestManager* m_qm;
+
     public:
-        Hero(const std::string& name, int health, int attackPower, int defense);
+        Hero(const std::string& name, int health, int attackPower, int defense, QuestManager* qm);
         ~Hero();
         void displayStats() const override;
         void takeDamage(int damage) override;
