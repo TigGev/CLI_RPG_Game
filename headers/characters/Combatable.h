@@ -2,6 +2,7 @@
 #define COMBATABLE_H
 
 class Character;
+
 class Combatable {
     public:
         virtual ~Combatable() = default;

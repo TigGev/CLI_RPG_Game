@@ -5,3 +5,5 @@ Character::Character(const std::string& name, int health, int attackPower, int d
     }
 
 std::string Character::getName() const {return m_name;}
+
+int Character::getHealt() const {return m_health;}

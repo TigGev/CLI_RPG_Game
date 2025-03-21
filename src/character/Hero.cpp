@@ -1,6 +1,7 @@
-#include "../../headers/characters/Hero.h"
-#include "../../headers/characters/NPC.h"
-#include "../../headers/utility/Utility.h"
+#include "Hero.h"
+#include "NPC.h"
+#include "Utility.h"
+#include "Monster.h"
 #include <iostream>
 #include <string>
 
@@ -56,5 +57,27 @@ void Hero::interact(Character* target) {
             m_qm->assignQuest(npc->getAssociatedQuest());
         }
     }
+    // to be continued
+    //
+    //
+    // ...
 }
+
+void Hero::attack(Character* target) {
+    if (!target) {
+        std::cout << "There is no one to attack!" << std::endl;
+        return;
+    }
+
+    target->takeDamage(m_attackPower);
+    std::cout << m_name << " attacks " << target->getName() << " for " << m_attackPower << " damage!" << std::endl;
+    if (target->getHealt() <= 0) {
+        Utility::printBlue(target->getName());
+        Utility::printBlue(" is dead!");
+        if (dynamic_cast<Monster*>(target)) { this->gainXP(20); }
+        return;
+    }
+    std::cout << target->getName() << "'s healt: "  << target->getHealt() << std::endl;
+}
+
 

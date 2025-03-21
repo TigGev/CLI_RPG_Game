@@ -16,5 +16,6 @@ class Character {
         virtual void displayStats() const = 0;
         virtual void takeDamage(int damage) = 0;
         std::string getName() const;
+        int getHealt() const;
 };
 #endif
