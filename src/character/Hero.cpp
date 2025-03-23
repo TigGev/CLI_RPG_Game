@@ -2,6 +2,7 @@
 #include "NPC.h"
 #include "Utility.h"
 #include "Monster.h"
+#include "Item.h"
 #include <iostream>
 #include <string>
 
@@ -80,4 +81,58 @@ void Hero::attack(Character* target) {
     std::cout << target->getName() << "'s healt: "  << target->getHealt() << std::endl;
 }
 
+void Hero::addItem(Item* item) {
+    m_inventory.addItem(item);
+}
 
+void Hero::useItem(int index) {
+    Item* item = m_inventory.getItem(index); 
+    if (item) { //if the index is incorrect the function will retun nullptr
+        const Type type = item->getType();
+        if (type == Type::Potion) {
+            m_health += item->getValue();
+            if (m_health > Limits::HERO_MAX_HEALT) m_health = Limits::HERO_MAX_HEALT;
+            Utility::printGreen(item->getName());
+            Utility::printGreen(" was applied | Healt: +");
+            Utility::printGreen(std::to_string(item->getValue()));
+            m_inventory.removeItem(index);
+        }
+        else if (type == Type::Weapon) {
+            m_attackPower += item->getValue();
+            if (m_attackPower > Limits::HERO_MAX_ATTAC_POWER) m_attackPower = Limits::HERO_MAX_ATTAC_POWER;
+            Utility::printGreen(m_name);
+            Utility::printGreen(" equips ");
+            Utility::printGreen(item->getName());
+            Utility::printGreen(" | Attac Power: +");
+            Utility::printGreen(std::to_string(item->getValue()));
+        }
+        // else if (item->getType() == Type::Key) {
+            // std::cout << m_name << " uses " << item->getName() << " to unlock something!\n";
+            // // e.g. gameWorld->unlockPortal(item->getName());
+            // delete item; 
+            // m_inventory.removeItem(index);
+        // }
+    }
+}
+
+void Hero::gainXP(int xp) {
+    m_experiencePoints += xp;
+    if(m_experiencePoints > Limits::HERO_MAX_XP) m_experiencePoints = Limits::HERO_MAX_XP;
+    if(m_experiencePoints >= 100 && (m_experiencePoints % 100) == 0) levelUp();
+}
+
+void Hero::levelUp() {
+    ++m_level;
+    //any logic for level up
+}
+
+void Hero::setMount(Mount* mount) {
+    if (!mount) {
+        Utility::printRed("Unknown Mount\n");
+        return;
+    }
+    delete m_currentMount;
+    m_currentMount = mount;
+}
+
+Mount* Hero::getMount() const {return m_currentMount;}
