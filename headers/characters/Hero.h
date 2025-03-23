@@ -5,7 +5,7 @@
 #include "Combatable.h"
 #include "../inventory/Inventory.h"
 #include "../moving/Mount.h"
-#include "QuestManager.h"
+#include "../quests/QuestManager.h"
 #include <vector>
 
 class Hero : public Character, public Interactable, public Combatable {
@@ -23,7 +23,7 @@ class Hero : public Character, public Interactable, public Combatable {
         void displayStats() const override;
         void takeDamage(int damage) override;
         void interact(Character* target) override;
-        // std::string getDialogue() const override;
+        std::string getDialogue() const override;
         void attack(Character* target) override;
         // void useAbility(Character* target) override;
         void addItem(Item* item);
@@ -32,5 +32,9 @@ class Hero : public Character, public Interactable, public Combatable {
         void levelUp();
         void setMount(Mount* mount);
         Mount* getMount() const;
+        int getInventorySize();
+        int getAttacPower();
+        int getLevel();
+        int getEXP();
 };
 #endif

@@ -1,8 +1,8 @@
-#include "Hero.h"
-#include "NPC.h"
-#include "Utility.h"
-#include "Monster.h"
-#include "Item.h"
+#include "../../headers/characters/Hero.h"
+#include "../../headers/characters/NPC.h"
+#include "../../headers/utility/Utility.h"
+#include "../../headers/characters/Monster.h"
+#include "../../headers/inventory/Item.h"
 #include <iostream>
 #include <string>
 
@@ -136,3 +136,15 @@ void Hero::setMount(Mount* mount) {
 }
 
 Mount* Hero::getMount() const {return m_currentMount;}
+
+std::string Hero::getDialogue() const {
+    return ("Hello I am " + m_name + " \n");
+}
+
+int Hero::getInventorySize() {return m_inventory.getSize();}
+
+int Hero::getAttacPower() {return m_attackPower;}
+
+int Hero::getLevel() {return m_level;}
+
+int Hero::getEXP() {return m_experiencePoints;}

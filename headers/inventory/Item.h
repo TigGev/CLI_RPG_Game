@@ -4,7 +4,7 @@
 
 enum class Type {Potion, Weapon, Key};
 
-bool operator==(Type lhs, Type rhs) {
+inline bool operator==(Type lhs, Type rhs) {
     return static_cast<int>(lhs) == static_cast<int>(rhs);
 }
 
@@ -12,7 +12,7 @@ class Item {
     private:
         Type m_type;
         std::string m_name;
-        // std::string m_description;
+        std::string m_description;
         int m_value;
     public:
         Item(Type type, const std::string& name, const std::string& description, int value);

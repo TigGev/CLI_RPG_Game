@@ -12,6 +12,6 @@ class Monster : public Character, public Combatable {
         void displayStats() const override;
         void takeDamage(int damage) override;
         void attack(Character* target) override;
-        void useAbility(Character* target) override;
+        void useAbility(Character* target);
 };
 #endif

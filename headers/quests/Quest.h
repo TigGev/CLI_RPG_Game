@@ -13,11 +13,13 @@ class Quest {
         Item* itemReward;
     public:
         Quest(const std::string& title, const std::string& description, int xpReward, Item* itemReward = nullptr);
-        ~Quest();
+        ~Quest() {}; ////////////////
+        Quest(const std::string& desc) : description(desc) {} ///////
+        std::string getDescription() const { return description; } ///////
         void complete();
         bool isQuestCompleted() const;
         std::string getTitle() const;
-        std::string getDescription() const;
+        // std::string getDescription() const;
         int getXPReward() const;
         Item* getItemReward() const;
 };

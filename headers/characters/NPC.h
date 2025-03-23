@@ -2,7 +2,7 @@
 #define NPC_H
 #include "Character.h"
 #include "Interactable.h"
-#include "Quest.h"
+// #include "../quests/Quest.h"
 #include <string>
 class NPC : public Character, public Interactable {
     private:
