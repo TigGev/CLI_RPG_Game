@@ -25,7 +25,7 @@ class Hero : public Character, public Interactable, public Combatable {
         void interact(Character* target) override;
         std::string getDialogue() const override;
         void attack(Character* target) override;
-        // void useAbility(Character* target) override;
+        void useAbility(Character* target) override {};
         void addItem(Item* item);
         void useItem(int index);
         void gainXP(int xp);

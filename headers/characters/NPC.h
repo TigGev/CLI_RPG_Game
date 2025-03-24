@@ -2,19 +2,21 @@
 #define NPC_H
 #include "Character.h"
 #include "Interactable.h"
-// #include "../quests/Quest.h"
+#include "../quests/Quest.h"
 #include <string>
+
+
 class NPC : public Character, public Interactable {
     private:
-        std::string dialogue;
-        Quest* associatedQuest;
+        std::string m_dialogue;
+        std::shared_ptr<Quest> m_associatedQuest;
     public:
-        NPC(const std::string& name, const std::string& dialogue, const std::string& quest);
-        ~NPC();
+        NPC(const std::string& name, const std::string& dialogue, std::shared_ptr<Quest> quest);
+        ~NPC() = default;
         void displayStats() const override;
         void takeDamage(int damage) override;
         void interact(Character* target) override;
         std::string getDialogue() const override;
-        Quest* getAssociatedQuest() const;
+        std::shared_ptr<Quest> getAssociatedQuest() const;
 };
 #endif

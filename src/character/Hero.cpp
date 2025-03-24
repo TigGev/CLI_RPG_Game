@@ -21,7 +21,7 @@ Hero::~Hero() {
 }
 
 void Hero::displayStats() const {
-    std::cout << "Name: " << m_name << "| Healt: ";
+    std::cout << "Name: " << m_name << " | Healt: ";
     Utility::printHealt(m_health);
     std::cout << " | Attack: ";    
     Utility::printAttack(m_attackPower);

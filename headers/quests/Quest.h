@@ -12,7 +12,7 @@ class Quest {
         int xpReward;
         Item* itemReward;
     public:
-        Quest(const std::string& title, const std::string& description, int xpReward, Item* itemReward = nullptr);
+        Quest(const std::string& title, const std::string& description, int xpReward, Item* itemReward = nullptr) {}; ///
         ~Quest() {}; ////////////////
         Quest(const std::string& desc) : description(desc) {} ///////
         std::string getDescription() const { return description; } ///////
