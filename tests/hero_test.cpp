@@ -10,54 +10,48 @@
 #include <sstream>
 #include <iostream>
 
+// Item::Item(Type type, const std::string& name, const std::string& description, int value)
+//     : m_type(type), m_name(name), m_description(description), m_value(value) {}
+// Item::~Item() {}
+// std::string Item::getName() const { return m_name; }
+// std::string Item::getDescription() const { return m_description; }
+// const Type& Item::getType() const { return m_type; }
+// int Item::getValue() const { return m_value; }
 
 
+// Inventory::Inventory() {}
+// Inventory::~Inventory() {
+//     for (Item* item : items) delete item;
+// }
+// void Inventory::addItem(Item* item) { items.push_back(item); }
+// void Inventory::removeItem(int index) {
+//     if (index >= 0 && index < items.size()) {
+//         delete items[index];
+//         items.erase(items.begin() + index);
+//     }
+// }
+// Item* Inventory::getItem(int index) const {
+//     return (index >= 0 && index < items.size()) ? items[index] : nullptr;
+// }
+// std::vector<Item*> Inventory::getItems() const { return items; }
+// int Inventory::getSize() const { return items.size(); }
 
-Item::Item(Type type, const std::string& name, const std::string& description, int value)
-    : m_type(type), m_name(name), m_description(description), m_value(value) {}
-Item::~Item() {}
-std::string Item::getName() const { return m_name; }
-std::string Item::getDescription() const { return m_description; }
-const Type& Item::getType() const { return m_type; }
-int Item::getValue() const { return m_value; }
+// NPC::NPC(const std::string& name, const std::string& dialogue, const std::string& quest)
+//     : Character(name, 50, 0, 0), dialogue(dialogue), associatedQuest(new Quest(quest)) {}
+// NPC::~NPC() { delete associatedQuest; }
+// void NPC::displayStats() const {}
+// void NPC::takeDamage(int damage) { m_health -= damage; if (m_health < 0) m_health = 0; }
+// void NPC::interact(Character* target) { std::cout << dialogue << "\n"; }
+// std::string NPC::getDialogue() const { return dialogue; }
+// Quest* NPC::getAssociatedQuest() const { return associatedQuest; }
 
-
-Inventory::Inventory() {}
-Inventory::~Inventory() {
-    for (Item* item : items) delete item;
-}
-void Inventory::addItem(Item* item) { items.push_back(item); }
-void Inventory::removeItem(int index) {
-    if (index >= 0 && index < items.size()) {
-        delete items[index];
-        items.erase(items.begin() + index);
-    }
-}
-Item* Inventory::getItem(int index) const {
-    return (index >= 0 && index < items.size()) ? items[index] : nullptr;
-}
-std::vector<Item*> Inventory::getItems() const { return items; }
-int Inventory::getSize() const { return items.size(); }
-
-
-NPC::NPC(const std::string& name, const std::string& dialogue, const std::string& quest)
-    : Character(name, 50, 0, 0), dialogue(dialogue), associatedQuest(new Quest(quest)) {}
-NPC::~NPC() { delete associatedQuest; }
-void NPC::displayStats() const {}
-void NPC::takeDamage(int damage) { m_health -= damage; if (m_health < 0) m_health = 0; }
-void NPC::interact(Character* target) { std::cout << dialogue << "\n"; }
-std::string NPC::getDialogue() const { return dialogue; }
-Quest* NPC::getAssociatedQuest() const { return associatedQuest; }
-
-
-Monster::Monster(const std::string& name, int health, int attackPower, int defense, const std::string& ability)
-    : Character(name, health, attackPower, defense), specialAbility(ability) {}
-Monster::~Monster() {}
-void Monster::displayStats() const {}
-void Monster::takeDamage(int damage) { m_health -= damage; if (m_health < 0) m_health = 0; }
-void Monster::attack(Character* target) { target->takeDamage(m_attackPower); }
-void Monster::useAbility(Character* target) {}
-
+// Monster::Monster(const std::string& name, int health, int attackPower, int defense, const std::string& ability)
+//     : Character(name, health, attackPower, defense), specialAbility(ability) {}
+// Monster::~Monster() {}
+// void Monster::displayStats() const {}
+// void Monster::takeDamage(int damage) { m_health -= damage; if (m_health < 0) m_health = 0; }
+// void Monster::attack(Character* target) { target->takeDamage(m_attackPower); }
+// void Monster::useAbility(Character* target) {}
 
 class HeroTest : public ::testing::Test {
 protected:
@@ -75,7 +69,6 @@ protected:
     QuestManager* qm;
 };
 
-
 TEST_F(HeroTest, ConstructorAndDisplayStats) {
     std::ostringstream oss;
     std::streambuf* oldCout = std::cout.rdbuf(oss.rdbuf());
@@ -91,7 +84,6 @@ TEST_F(HeroTest, ConstructorAndDisplayStats) {
     EXPECT_TRUE(output.find("XP: 0") != std::string::npos);
 }
 
-
 TEST_F(HeroTest, TakeDamage) {
     std::ostringstream oss;
     std::streambuf* oldCout = std::cout.rdbuf(oss.rdbuf());
@@ -103,7 +95,6 @@ TEST_F(HeroTest, TakeDamage) {
     EXPECT_TRUE(output.find("Elara takes 5 damage") != std::string::npos);
 }
 
-
 TEST_F(HeroTest, TakeDamageFatal) {
     std::ostringstream oss;
     std::streambuf* oldCout = std::cout.rdbuf(oss.rdbuf());
@@ -114,7 +105,6 @@ TEST_F(HeroTest, TakeDamageFatal) {
     EXPECT_EQ(hero->getHealt(), 0);
     EXPECT_TRUE(output.find("Game over! Elara is died.") != std::string::npos);
 }
-
 
 TEST_F(HeroTest, InteractWithNPC_AcceptQuest) {
     NPC npc("Villager", "Help me!", "Slay the Troll");
@@ -147,7 +137,6 @@ TEST_F(HeroTest, AttackMonster) {
     EXPECT_TRUE(output.find("Elara attacks Goblin for 15 damage!") != std::string::npos);
 }
 
-
 TEST_F(HeroTest, AddAndUsePotion) {
     Item* potion = new Item(Type::Potion, "Health Potion", "Restores 20 HP", 20);
     hero->addItem(potion);
@@ -163,7 +152,6 @@ TEST_F(HeroTest, AddAndUsePotion) {
     EXPECT_EQ(hero->getInventorySize(), 0); 
     EXPECT_TRUE(output.find("Health Potion was applied") != std::string::npos);
 }
-
 
 TEST_F(HeroTest, UseWeapon) {
     Item* weapon = new Item(Type::Weapon, "Sword", "Increases attack by 10", 10);
@@ -181,7 +169,6 @@ TEST_F(HeroTest, UseWeapon) {
     EXPECT_TRUE(output.find("Elara equips Sword") != std::string::npos);
 }
 
-
 TEST_F(HeroTest, GainXPAndLevelUp) {
     hero->gainXP(50);
     EXPECT_EQ(hero->getEXP(), 50);
@@ -189,7 +176,6 @@ TEST_F(HeroTest, GainXPAndLevelUp) {
     EXPECT_EQ(hero->getEXP(), 100);
     EXPECT_EQ(hero->getLevel(), 2); 
 }
-
 
 TEST_F(HeroTest, SetAndGetMount) {
     Mount* horse = new Mount("Horse");

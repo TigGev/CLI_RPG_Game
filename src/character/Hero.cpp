@@ -35,6 +35,7 @@ void Hero::displayStats() const {
 void Hero::takeDamage(int damage) {
     if (damage < 1) return;
     int finalDamage = damage - m_defense;
+    if (finalDamage < 0) finalDamage = 0;
     m_health -= finalDamage;
     if (m_health <= 0) {
         m_health = 0;

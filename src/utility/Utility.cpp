@@ -1,5 +1,5 @@
 #include "../../headers/utility/Utility.h"
-
+#include "../../headers/characters/Monster.h"
 
 void Utility::printRed(const std::string& msg) {std::cout << "\033[31m" << msg << "\033[0m";}
 void Utility::printGreen(const std::string& msg) {std::cout << "\033[32m" << msg << "\033[0m";}
@@ -27,6 +27,18 @@ void Utility::printDefence(int defence) {
     else if (defence > 10) printYell(std::to_string(defence));
     else printRed(std::to_string(defence));
 }
+
+
+void Utility::printAbility(Ability ability) {
+    switch (ability) {
+        case Ability::Regenerate : printPurple("Regenerate"); break;
+        case Ability::FireBreath : printPurple("FireBreath"); break;
+        case Ability::BoneSmash : printPurple("BoneSmash"); break;
+        case Ability::None : printPurple("None"); break;
+        default: printPurple("Unknown ability"); break;
+    }
+}
+
 
 int Utility::getValidatedInput(int min, int max) {
     int choice;

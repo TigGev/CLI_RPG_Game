@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 
+enum class Ability;
+
 namespace Utility {
     int getValidatedInput(int min, int max);
     void saveGame(const std::string& filename);
@@ -18,6 +20,7 @@ namespace Utility {
     void printHealt(int healt);
     void printAttack(int attack);
     void printDefence(int defence);
+    void printAbility(Ability ability);
 }
 
 namespace Limits {
