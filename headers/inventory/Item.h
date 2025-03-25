@@ -16,11 +16,11 @@ class Item {
         int m_value;
     public:
         Item(Type type, const std::string& name, const std::string& description, int value);
-        ~Item();
+        ~Item() = default;
         std::string getName() const;
         std::string getDescription() const;
         const Type& getType() const;
         int getValue() const;
-        // virtual void use() = 0;
+        // virtual void use() = 0; 
 };
 #endif

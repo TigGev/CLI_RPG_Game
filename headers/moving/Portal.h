@@ -14,7 +14,7 @@ class Portal {
         std::string riddleAnswer;
     public:
         Portal(const std::string& source, const std::string& destination, bool locked, 
-               const std::string& condition, const std::string& answer = "");
+               const std::string& condition, const std::string& answer = "") ;
         ~Portal();
         bool attemptActivation(const std::string& playerInput, Inventory& playerInventory);
         std::string getSource() const;

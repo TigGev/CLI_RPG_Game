@@ -2,25 +2,23 @@
 #define MOUNT_H
 #include <string>
 
-enum class MountType { Horse, Airship, Boat };
+enum class MountType {Horse, Airship, Boat};
 
 class Mount {
     protected:
-        std::string name;
-        MountType type;
-        double speedMultiplier;
-        int condition;
+        std::string m_name;
+        MountType m_type;
+        double m_speedMultiplier;
+        unsigned int m_condition; //Fuel
     public:
-        Mount(const std::string& name, MountType type, double speedMultiplier, int condition);
+        Mount(const std::string& name, MountType type);
         virtual ~Mount() = default;
-        // virtual void useMount(int distance) = 0;
-        // virtual void restOrRefuel() = 0;
-        // std::string getName() const;
+        virtual void useMount(int distance);
+        virtual void restOrRefuel();
+        std::string getName() const;
         MountType getType() const;
         double getSpeedMultiplier() const;
         int getCondition() const;
 
-        Mount(const std::string& n) : name(n) {} //////////////
-        std::string getName() const { return name; } //////////////
 };
 #endif

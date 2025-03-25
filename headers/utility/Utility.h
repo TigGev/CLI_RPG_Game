@@ -4,12 +4,16 @@
 #include <iostream>
 
 enum class Ability;
+enum class MountType;
+
 
 namespace Utility {
     int getValidatedInput(int min, int max);
     void saveGame(const std::string& filename);
     void loadGame(const std::string& filename);
     int generateRandom(int min, int max);
+    int getExpenseForMount(int distance, MountType type);
+    int getPowerReserve(int condition, MountType type);
 
     void printRed(const std::string& msg);
     void printGreen(const std::string& msg);
@@ -52,6 +56,10 @@ namespace Limits {
 
     const int MIN_LEVEL = 1;
     const int MAX_LEVEL = 100;
+
+    const int HORSE_MAX_DISTANCE = 300;
+    const int AIRSHIP_MAX_DISTANCE = 100;
+    const int BOAT_MAX_DISTANCE = 200;
 }
 
 #endif

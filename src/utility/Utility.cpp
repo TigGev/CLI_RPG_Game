@@ -1,5 +1,6 @@
 #include "../../headers/utility/Utility.h"
 #include "../../headers/characters/Monster.h"
+#include "../../headers/moving/Mount.h"
 
 void Utility::printRed(const std::string& msg) {std::cout << "\033[31m" << msg << "\033[0m";}
 void Utility::printGreen(const std::string& msg) {std::cout << "\033[32m" << msg << "\033[0m";}
@@ -60,4 +61,24 @@ int Utility::getValidatedInput(int min, int max) {
         }
     }
     return choice;
+}
+
+int Utility::getExpenseForMount(int distance, MountType type) {
+    int expense;
+    switch (type) {
+        case MountType::Horse: expense = Limits::HORSE_MAX_DISTANCE/100;  break;
+        case MountType::Airship: expense = Limits::AIRSHIP_MAX_DISTANCE/100; break;
+        case MountType::Boat: expense = Limits::BOAT_MAX_DISTANCE/100; break;
+    }
+    return distance/expense;
+}
+
+int Utility::getPowerReserve(int condition, MountType type) {
+    int expense;
+    switch (type) {
+        case MountType::Horse: expense = Limits::HORSE_MAX_DISTANCE/100;  break;
+        case MountType::Airship: expense = Limits::AIRSHIP_MAX_DISTANCE/100; break;
+        case MountType::Boat: expense = Limits::BOAT_MAX_DISTANCE/100; break;
+    }
+    return condition * expense;
 }
