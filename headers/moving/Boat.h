@@ -4,13 +4,12 @@
 #include <string>
 
 class Boat : public Mount {
-    private:
-        std::string weatherCondition;
+    // private:
+        // std::string weatherCondition;
     public:
         Boat(const std::string& name);
         ~Boat();
         void useMount(int distance) override;
-        void restOrRefuel() override;
-        void setWeather(const std::string& weather);
+        // void setWeather(const std::string& weather);
 };
 #endif

@@ -66,9 +66,9 @@ int Utility::getValidatedInput(int min, int max) {
 int Utility::getExpenseForMount(int distance, MountType type) {
     int expense;
     switch (type) {
-        case MountType::Horse: expense = Limits::HORSE_MAX_DISTANCE/100;  break;
-        case MountType::Airship: expense = Limits::AIRSHIP_MAX_DISTANCE/100; break;
-        case MountType::Boat: expense = Limits::BOAT_MAX_DISTANCE/100; break;
+        case MountType::Land: expense = Limits::HORSE_MAX_DISTANCE/100;  break;
+        case MountType::Air: expense = Limits::AIRSHIP_MAX_DISTANCE/100; break;
+        case MountType::Water: expense = Limits::BOAT_MAX_DISTANCE/100; break;
     }
     return distance/expense;
 }
@@ -76,9 +76,9 @@ int Utility::getExpenseForMount(int distance, MountType type) {
 int Utility::getPowerReserve(int condition, MountType type) {
     int expense;
     switch (type) {
-        case MountType::Horse: expense = Limits::HORSE_MAX_DISTANCE/100;  break;
-        case MountType::Airship: expense = Limits::AIRSHIP_MAX_DISTANCE/100; break;
-        case MountType::Boat: expense = Limits::BOAT_MAX_DISTANCE/100; break;
+        case MountType::Land: expense = Limits::HORSE_MAX_DISTANCE/100;  break;
+        case MountType::Air: expense = Limits::AIRSHIP_MAX_DISTANCE/100; break;
+        case MountType::Water: expense = Limits::BOAT_MAX_DISTANCE/100; break;
     }
     return condition * expense;
 }

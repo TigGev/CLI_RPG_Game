@@ -7,19 +7,19 @@ inline bool operator==(MountType lhs, MountType rhs) {
 
 
 Mount::Mount(const std::string& name, MountType type) 
-    : m_name(name), m_type(type), m_condition(100) {
-        m_speedMultiplier = m_type == MountType::Horse ? 2 : m_type == MountType::Airship ? 3.5 : m_type == MountType::Boat ? 2.5 : 1;
+    : m_name(name), m_type(type), m_condition(100) { 
+        m_speedMultiplier = m_type == MountType::Land? 2 : m_type == MountType::Air ? 3.5 : m_type == MountType::Water ? 2.5 : 1;
 }
 
-void Mount::useMount(int distance) {
-    int expense = Utility::getExpenseForMount(distance, m_type);
-    if ((m_condition - expense) < 0) {
-        std::cout << "Too long distance. Power reserve - " << Utility::getPowerReserve(m_condition, m_type) << " Km" << std::endl;
-        return;
-    }
-    m_condition -= expense;
-    std::cout << distance << "Km movment." << std::endl;
-}
+// void Mount::useMount(int distance) {
+//     int expense = Utility::getExpenseForMount(distance, m_type);
+//     if ((m_condition - expense) < 0) {
+//         std::cout << "Too long distance. Power reserve - " << Utility::getPowerReserve(m_condition, m_type) << " Km" << std::endl;
+//         return;
+//     }
+//     m_condition -= expense;
+//     std::cout << distance << "Km movment." << std::endl;
+// }
 
 void Mount::restOrRefuel() {
     m_condition = 100;

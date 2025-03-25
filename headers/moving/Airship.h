@@ -4,9 +4,8 @@
 
 class Airship : public Mount {
     public:
-        Airship(const std::string& name);
-        ~Airship();
+        Airship(const std::string& name);;
+        ~Airship() = default;
         void useMount(int distance) override;
-        void restOrRefuel() override;
 };
 #endif

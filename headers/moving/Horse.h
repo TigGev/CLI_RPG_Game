@@ -4,8 +4,7 @@
 class Horse : public Mount {
     public:
         Horse(const std::string& name);
-        ~Horse();
+        ~Horse() = default;
         void useMount(int distance) override;
-        void restOrRefuel() override;
 };
 #endif
