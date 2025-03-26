@@ -12,7 +12,7 @@ class Quest {
         std::shared_ptr<Item> m_itemReward;
     public:
         Quest(const std::string& title, const std::string& description, int xpReward, std::shared_ptr<Item> itemReward = nullptr);
-        ~Quest() {}; 
+        ~Quest() {std::cout << "~Quest" << std::endl;}
         // Quest(const std::string& desc);
         void complete();
         std::string getDescription() ;

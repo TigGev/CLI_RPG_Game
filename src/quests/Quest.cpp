@@ -1,7 +1,7 @@
 #include "../../headers/quests/Quest.h"
 #include "../../headers/utility/Utility.h"
 
-Quest::Quest(const std::string& title, const std::string& description, int xpReward, std::shared_ptr<Item> itemReward = nullptr) 
+Quest::Quest(const std::string& title, const std::string& description, int xpReward, std::shared_ptr<Item> itemReward) 
     : m_title(title), m_description(description), m_xpReward(xpReward), m_itemReward(itemReward) {}
 
 std::string Quest::getDescription() {return m_description;}

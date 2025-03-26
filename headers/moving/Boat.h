@@ -8,7 +8,7 @@ class Boat : public Mount {
         // std::string weatherCondition;
     public:
         Boat(const std::string& name);
-        ~Boat();
+        ~Boat() {std::cout << "~Boat" << std::endl;}
         void useMount(int distance) override;
         // void setWeather(const std::string& weather);
 };

@@ -6,7 +6,7 @@ Portal::Portal(const std::string& name, Location source, Location destination, b
         : m_name(name), m_sourceLocation(source), m_destinationLocation(destination), m_isLocked(locked),
             m_activationCondition(condition), m_Answer(answer) {}
 
-bool Portal::attemptActivation(const std::string& playerInput, Inventory& playerInventory) {
+bool Portal::attemptActivation(const std::string& playerInput /*,Inventory& playerInventory*/) {
     if (playerInput == m_activationCondition) {
         m_isLocked = false;
         return true;

@@ -52,6 +52,7 @@ void Monster::takeDamage(int damage) {
     int finalDamage = damage - m_defense;
     m_health -= finalDamage;
     if (m_health <= 0) {
+        m_health = 0;
         Utility::printRed(m_name);
         Utility::printRed(" lost.");
         return;

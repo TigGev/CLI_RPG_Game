@@ -1,186 +1,163 @@
 #include <gtest/gtest.h>
 #include "../headers/characters/Hero.h"
-#include "../headers/characters/NPC.h"
 #include "../headers/characters/Monster.h"
+#include "../headers/characters/NPC.h"
 #include "../headers/inventory/Item.h"
-#include "../headers/inventory/Inventory.h"
-#include "../headers/moving/Mount.h"
+#include "../headers/moving/Horse.h"
+#include "../headers/quests/Quest.h"
 #include "../headers/quests/QuestManager.h"
 #include "../headers/utility/Utility.h"
+#include <memory>
 #include <sstream>
-#include <iostream>
 
-// Item::Item(Type type, const std::string& name, const std::string& description, int value)
-//     : m_type(type), m_name(name), m_description(description), m_value(value) {}
-// Item::~Item() {}
-// std::string Item::getName() const { return m_name; }
-// std::string Item::getDescription() const { return m_description; }
-// const Type& Item::getType() const { return m_type; }
-// int Item::getValue() const { return m_value; }
-
-
-// Inventory::Inventory() {}
-// Inventory::~Inventory() {
-//     for (Item* item : items) delete item;
-// }
-// void Inventory::addItem(Item* item) { items.push_back(item); }
-// void Inventory::removeItem(int index) {
-//     if (index >= 0 && index < items.size()) {
-//         delete items[index];
-//         items.erase(items.begin() + index);
-//     }
-// }
-// Item* Inventory::getItem(int index) const {
-//     return (index >= 0 && index < items.size()) ? items[index] : nullptr;
-// }
-// std::vector<Item*> Inventory::getItems() const { return items; }
-// int Inventory::getSize() const { return items.size(); }
-
-// NPC::NPC(const std::string& name, const std::string& dialogue, const std::string& quest)
-//     : Character(name, 50, 0, 0), dialogue(dialogue), associatedQuest(new Quest(quest)) {}
-// NPC::~NPC() { delete associatedQuest; }
-// void NPC::displayStats() const {}
-// void NPC::takeDamage(int damage) { m_health -= damage; if (m_health < 0) m_health = 0; }
-// void NPC::interact(Character* target) { std::cout << dialogue << "\n"; }
-// std::string NPC::getDialogue() const { return dialogue; }
-// Quest* NPC::getAssociatedQuest() const { return associatedQuest; }
-
-// Monster::Monster(const std::string& name, int health, int attackPower, int defense, const std::string& ability)
-//     : Character(name, health, attackPower, defense), specialAbility(ability) {}
-// Monster::~Monster() {}
-// void Monster::displayStats() const {}
-// void Monster::takeDamage(int damage) { m_health -= damage; if (m_health < 0) m_health = 0; }
-// void Monster::attack(Character* target) { target->takeDamage(m_attackPower); }
-// void Monster::useAbility(Character* target) {}
-
-class HeroTest : public ::testing::Test {
-protected:
-    void SetUp() override {
-        qm = new QuestManager();
-        hero = new Hero("Elara", 80, 15, 5, qm);
-    }
-
-    void TearDown() override {
-        delete hero;
-        delete qm;
-    }
-
-    Hero* hero;
-    QuestManager* qm;
-};
-
-TEST_F(HeroTest, ConstructorAndDisplayStats) {
-    std::ostringstream oss;
-    std::streambuf* oldCout = std::cout.rdbuf(oss.rdbuf());
-    hero->displayStats();
-    std::cout.rdbuf(oldCout);
-
-    std::string output = oss.str();
-    EXPECT_TRUE(output.find("Name: Elara") != std::string::npos);
-    EXPECT_TRUE(output.find("Healt: 80") != std::string::npos);
-    EXPECT_TRUE(output.find("Attack: 15") != std::string::npos);
-    EXPECT_TRUE(output.find("Defence: 5") != std::string::npos);
-    EXPECT_TRUE(output.find("Level: 1") != std::string::npos);
-    EXPECT_TRUE(output.find("XP: 0") != std::string::npos);
+TEST(HeroTest, CreateHero) {
+    QuestManager qm;
+    Hero hero("Arthur", Limits::HERO_PRIM_HEALT, Limits::HERO_PRIM_ATTAC_POWER, Limits::HERO_PRIM_DEFENCE, qm);
+    EXPECT_EQ(hero.getName(), "Arthur");
+    EXPECT_EQ(hero.getHealt(), Limits::HERO_PRIM_HEALT);
+    EXPECT_EQ(hero.getAttacPower(), Limits::HERO_PRIM_ATTAC_POWER);
+    EXPECT_EQ(hero.getLevel(), 1);
+    EXPECT_EQ(hero.getEXP(), Limits::HERO_PRIM_XP);
+    EXPECT_EQ(hero.getInventorySize(), 0);
+    EXPECT_EQ(hero.getMount(), nullptr);
 }
 
-TEST_F(HeroTest, TakeDamage) {
-    std::ostringstream oss;
-    std::streambuf* oldCout = std::cout.rdbuf(oss.rdbuf());
-    hero->takeDamage(10);
-    std::cout.rdbuf(oldCout);
-
-    std::string output = oss.str();
-    EXPECT_EQ(hero->getHealt(), 75); 
-    EXPECT_TRUE(output.find("Elara takes 5 damage") != std::string::npos);
+TEST(HeroTest, CreateHeroWithInvalidValues) {
+    QuestManager qm;
+    Hero hero("Merlin", -50, -10, -5, qm);
+    EXPECT_EQ(hero.getHealt(), 0);
+    EXPECT_EQ(hero.getAttacPower(), 1);
+    EXPECT_EQ(hero.getLevel(), 1);
+    EXPECT_EQ(hero.getEXP(), 0);
 }
 
-TEST_F(HeroTest, TakeDamageFatal) {
-    std::ostringstream oss;
-    std::streambuf* oldCout = std::cout.rdbuf(oss.rdbuf());
-    hero->takeDamage(100);
-    std::cout.rdbuf(oldCout);
-
-    std::string output = oss.str();
-    EXPECT_EQ(hero->getHealt(), 0);
-    EXPECT_TRUE(output.find("Game over! Elara is died.") != std::string::npos);
+TEST(HeroTest, TakeDamage) {
+    QuestManager qm;
+    Hero hero("Lancelot", 100, 15, 5, qm);
+    hero.takeDamage(20);
+    EXPECT_EQ(hero.getHealt(), 85);
+    hero.takeDamage(100);
+    EXPECT_EQ(hero.getHealt(), 0);
 }
 
-TEST_F(HeroTest, InteractWithNPC_AcceptQuest) {
-    NPC npc("Villager", "Help me!", "Slay the Troll");
-    std::ostringstream oss;
-    std::streambuf* oldCout = std::cout.rdbuf(oss.rdbuf());
-    std::istringstream iss("1\n"); 
-    std::streambuf* oldCin = std::cin.rdbuf(iss.rdbuf());
+TEST(HeroTest, AttackMonster) {
+    QuestManager qm;
+    Hero hero("Galahad", 100, 25, 10, qm);
+    Monster monster("Dragon", 50, 15, 5, Ability::FireBreath);
 
-    hero->interact(&npc);
+    hero.attack(&monster);
+    EXPECT_EQ(monster.getHealt(), 30);
+    hero.attack(&monster); 
+    EXPECT_EQ(monster.getHealt(),10);
+    hero.attack(&monster);
+    EXPECT_EQ(hero.getEXP(), 20);
+}
 
+TEST(HeroTest, UsePotion) {
+    QuestManager qm;
+    Hero hero("Percival", 50, 10, 5, qm);
+    auto potion = std::make_shared<Item>(Type::Potion, "Health Potion", "Restores 30 HP", 30);
+
+    hero.addItem(potion);
+    EXPECT_EQ(hero.getInventorySize(), 1);
+    hero.useItem(0);
+    EXPECT_EQ(hero.getHealt(), 80);
+    EXPECT_EQ(hero.getInventorySize(), 0);
+}
+
+TEST(HeroTest, UsePotionExceedMaxHealth) {
+    QuestManager qm;
+    Hero hero("Tristan", Limits::HERO_MAX_HEALT - 10, 15, 5, qm);
+    auto potion = std::make_shared<Item>(Type::Potion, "Big Potion", "Restores 50 HP", 50);
+
+    hero.addItem(potion);
+    hero.useItem(0);
+    EXPECT_EQ(hero.getHealt(), Limits::HERO_MAX_HEALT);
+}
+
+TEST(HeroTest, UseWeapon) {
+    QuestManager qm;
+    Hero hero("Bors", 100, 15, 5, qm);
+    auto weapon = std::make_shared<Item>(Type::Weapon, "Sword", "Increases attack by 10", 10);
+
+    hero.addItem(weapon);
+    EXPECT_EQ(hero.getInventorySize(), 1);
+    hero.useItem(0);
+    EXPECT_EQ(hero.getAttacPower(), 25);
+    EXPECT_EQ(hero.getInventorySize(), 1);
+}
+
+TEST(HeroTest, UseWeaponExceedMaxAttack) {
+    QuestManager qm;
+    Hero hero("Gawain", 100, Limits::HERO_MAX_ATTAC_POWER - 10, 5, qm); // 190 attack
+    auto weapon = std::make_shared<Item>(Type::Weapon, "Great Axe", "Increases attack by 20", 20);
+
+    hero.addItem(weapon);
+    hero.useItem(0);
+    EXPECT_EQ(hero.getAttacPower(), Limits::HERO_MAX_ATTAC_POWER);
+}
+
+TEST(HeroTest, GainXPAndLevelUp) {
+    QuestManager qm;
+    Hero hero("Bedivere", 100, 20, 10, qm);
+    hero.gainXP(50);
+    EXPECT_EQ(hero.getEXP(), 50);
+    EXPECT_EQ(hero.getLevel(), 1);
+    hero.gainXP(50);
+    EXPECT_EQ(hero.getEXP(), 100);
+    EXPECT_EQ(hero.getLevel(), 2);
+}
+
+TEST(HeroTest, GainXPExceedMax) {
+    QuestManager qm;
+    Hero hero("Kay", 100, 20, 10, qm);
+    hero.gainXP(Limits::HERO_MAX_XP + 100);
+    EXPECT_EQ(hero.getEXP(), Limits::HERO_MAX_XP);
+    EXPECT_EQ(hero.getLevel(), Limits::HERO_MAX_XP / 100 + 1);
+}
+
+TEST(HeroTest, SetAndUseMount) {
+    QuestManager qm;
+    Hero hero("Ector", 100, 20, 10, qm);
+    Horse* horse = new Horse("Thunderbolt");
+
+    hero.setMount(horse);
+    EXPECT_EQ(hero.getMount()->getName(), "Thunderbolt");
+    EXPECT_EQ(hero.getMount()->getCondition(), 100);
+    hero.getMount()->useMount(50);
+    EXPECT_EQ(hero.getMount()->getCondition(), 83);
+    hero.getMount()->useMount(301);
+    EXPECT_EQ(hero.getMount()->getCondition(), 83);
+}
+
+TEST(HeroTest, InteractWithNPC) {
+    QuestManager qm;
+    Hero hero("Gareth", 100, 20, 10, qm);
+    auto quest = std::make_shared<Quest>("Slay Dragon", "Kill the dragon", 50);
+    NPC npc("Villager", "Please help us!", quest);
+
+    std::stringstream input("1\n");
+    std::streambuf* oldCin = std::cin.rdbuf(input.rdbuf());
     std::cin.rdbuf(oldCin);
-    std::cout.rdbuf(oldCout);
-
-    std::string output = oss.str();
-    EXPECT_TRUE(output.find("Help me!") != std::string::npos);
-    EXPECT_TRUE(output.find("Quest accepted!") != std::string::npos);
-    EXPECT_TRUE(output.find("Slay the Troll") != std::string::npos);
+    hero.interact(&npc);
+    EXPECT_EQ(hero.getActiveQuests()[0]->getTitle(), "Slay Dragon");
+    EXPECT_EQ(hero.getActiveQuests().size(), 1);
 }
 
+TEST(HeroTest, DistributeRewards) {
+    QuestManager qm;
+    Hero hero("Lionel", 100, 20, 10, qm);
+    auto item = std::make_shared<Item>(Type::Potion, "Elixir", "Restores 20 HP", 20);
+    auto quest = std::make_shared<Quest>("Find Treasure", "Locate the chest", 30, item);
 
-TEST_F(HeroTest, AttackMonster) {
-    Monster monster("Goblin", 30, 10, 2, "Poison Sting");
-    std::ostringstream oss;
-    std::streambuf* oldCout = std::cout.rdbuf(oss.rdbuf());
-    hero->attack(&monster);
-    std::cout.rdbuf(oldCout);
+    qm.assignQuest(quest);
+    quest->complete();
+    qm.checkQuestCompletion();
+    qm.distributeRewards(&hero);
 
-    std::string output = oss.str();
-    EXPECT_EQ(monster.getHealt(), 17); 
-    EXPECT_TRUE(output.find("Elara attacks Goblin for 15 damage!") != std::string::npos);
-}
-
-TEST_F(HeroTest, AddAndUsePotion) {
-    Item* potion = new Item(Type::Potion, "Health Potion", "Restores 20 HP", 20);
-    hero->addItem(potion);
-    EXPECT_EQ(hero->getInventorySize(), 1);
-
-    std::ostringstream oss;
-    std::streambuf* oldCout = std::cout.rdbuf(oss.rdbuf());
-    hero->useItem(0);
-    std::cout.rdbuf(oldCout);
-
-    std::string output = oss.str();
-    EXPECT_EQ(hero->getHealt(), 100); 
-    EXPECT_EQ(hero->getInventorySize(), 0); 
-    EXPECT_TRUE(output.find("Health Potion was applied") != std::string::npos);
-}
-
-TEST_F(HeroTest, UseWeapon) {
-    Item* weapon = new Item(Type::Weapon, "Sword", "Increases attack by 10", 10);
-    hero->addItem(weapon);
-    EXPECT_EQ(hero->getInventorySize(), 1);
-
-    std::ostringstream oss;
-    std::streambuf* oldCout = std::cout.rdbuf(oss.rdbuf());
-    hero->useItem(0);
-    std::cout.rdbuf(oldCout);
-
-    std::string output = oss.str();
-    EXPECT_EQ(hero->getAttacPower(), 25); 
-    EXPECT_EQ(hero->getInventorySize(), 1); 
-    EXPECT_TRUE(output.find("Elara equips Sword") != std::string::npos);
-}
-
-TEST_F(HeroTest, GainXPAndLevelUp) {
-    hero->gainXP(50);
-    EXPECT_EQ(hero->getEXP(), 50);
-    hero->gainXP(50); 
-    EXPECT_EQ(hero->getEXP(), 100);
-    EXPECT_EQ(hero->getLevel(), 2); 
-}
-
-TEST_F(HeroTest, SetAndGetMount) {
-    Mount* horse = new Mount("Horse");
-    hero->setMount(horse);
-    EXPECT_EQ(hero->getMount()->getName(), "Horse");
+    EXPECT_EQ(hero.getEXP(), 30);
+    EXPECT_EQ(hero.getInventorySize(), 1);
+    
 }
 
 int main(int argc, char **argv) {

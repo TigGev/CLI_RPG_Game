@@ -36,7 +36,7 @@ namespace Limits {
     const int HERO_PRIM_LEVEL  = 15;
     const int HERO_MAX_LEVEL = 200;
     const int HERO_PRIM_XP  = 0;
-    const int HERO_MAX_XP = 10000;
+    const int HERO_MAX_XP = 9999;
 
     const int MONSTER_PRIM_HEALT = 50;
     const int MONSTER_MAX_HEALT = 1000;

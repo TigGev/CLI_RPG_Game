@@ -16,7 +16,7 @@ class Location {
         std::vector<std::shared_ptr<Portal>> m_portals;
     public:
         Location(const std::string& name, const std::string& description);
-        ~Location() = default;
+        ~Location() {std::cout << "~Location" << std::endl;}
         void addEntity(std::shared_ptr<Character>entity);
         void removeEntity(std::shared_ptr<Character> entity);
         void addPortal(std::shared_ptr<Portal> portal);

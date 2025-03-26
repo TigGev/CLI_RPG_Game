@@ -1,6 +1,7 @@
 #include "../../headers/quests/QuestManager.h"
 #include "../../headers/inventory/Item.h"
 #include "../../headers/utility/Utility.h"
+#include "../../headers/characters/Hero.h"
 
 void QuestManager::assignQuest(std::shared_ptr<Quest> quest) {
     if (!quest) {
@@ -11,10 +12,10 @@ void QuestManager::assignQuest(std::shared_ptr<Quest> quest) {
     Utility::printGreen("Successful adding of quest.\n");
 }
 
-std::vector<std::shared_ptr<Quest>> QuestManager::getActiveQuests() const {return m_activeQuests;}
+std::vector<std::shared_ptr<Quest>> QuestManager::getActiveQuests() const { return m_activeQuests;}
 
 void QuestManager::checkQuestCompletion() {
-    for (int i = 0; i < m_activeQuests.size(); ++i) {
+    for (unsigned long i = 0; i < m_activeQuests.size(); ++i) {
         if (m_activeQuests[i]->isQuestCompleted()) {
             m_completedQuests.push_back(m_activeQuests[i]);
             m_activeQuests.erase(m_activeQuests.begin() + i);

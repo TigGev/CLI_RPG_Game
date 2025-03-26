@@ -1,5 +1,6 @@
 #ifndef GAMETIME_H
 #define GAMETIME_H
+#include <iostream>
 
 enum class TimeOfDay { Morning, Afternoon, Evening, Night };
 
@@ -10,7 +11,7 @@ class GameTime {
         int m_dayCount;
     public:
         GameTime();
-        ~GameTime() = default;
+        ~GameTime() {std::cout << "~GameTime" << std::endl;}
         void advanceTime(int hours);
         TimeOfDay getCurrentTime() const;
         int getDayCount() const;

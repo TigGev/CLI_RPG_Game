@@ -12,7 +12,7 @@ class GameWorld {
         std::shared_ptr<Location> m_currentLocation;
     public:
         GameWorld(std::shared_ptr<Location> firstLocation);
-        ~GameWorld() = default;
+        ~GameWorld() {std::cout << "~GameWorld" << std::endl;}
         void addLocation(std::shared_ptr<Location> location);
         void moveToLocation(const std::string& destination);
         std::weak_ptr<Location> getCurrentLocation() const;

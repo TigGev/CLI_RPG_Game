@@ -10,15 +10,13 @@
 
 Hero::Hero(const std::string& name, int health, int attackPower, int defense, QuestManager qm) 
     : Character(name, health, attackPower, defense) {
+        m_level = 1;
+        m_experiencePoints = Limits::HERO_PRIM_XP;
         if (health < 0) m_health = 0;
         if (attackPower < 1) m_attackPower = 1;
         if (defense < 0) m_defense = 0;
         m_qm = qm;
     }
-
-Hero::~Hero() {
-    delete m_currentMount;
-}
 
 void Hero::displayStats() const {
     std::cout << "Name: " << m_name << " | Healt: ";
@@ -32,6 +30,13 @@ void Hero::displayStats() const {
     std::cout << std::endl;
 }
 
+void Hero::useAbility(Character* target) {
+    m_attackPower += 10;
+    attack(target);
+    m_attackPower -= 10;
+}
+
+
 void Hero::takeDamage(int damage) {
     if (damage < 1) return;
     int finalDamage = damage - m_defense;
@@ -39,7 +44,7 @@ void Hero::takeDamage(int damage) {
     m_health -= finalDamage;
     if (m_health <= 0) {
         m_health = 0;
-        std::cout << "Game over! " << m_name << " is died.";
+        std::cout << "Game over! " << m_name << " is died.\n";
         //gameOver() // function that turn off the game
         return;
     }
@@ -65,6 +70,9 @@ void Hero::interact(Character* target) {
     // ...
 }
 
+std::vector<std::shared_ptr<Quest>> Hero::getActiveQuests() {return m_qm.getActiveQuests();}
+
+
 void Hero::attack(Character* target) {
     if (!target) {
         std::cout << "There is no one to attack!" << std::endl;
@@ -75,7 +83,7 @@ void Hero::attack(Character* target) {
     std::cout << m_name << " attacks " << target->getName() << " for " << m_attackPower << " damage!" << std::endl;
     if (target->getHealt() <= 0) {
         Utility::printBlue(target->getName());
-        Utility::printBlue(" is dead!");
+        Utility::printBlue(" is dead!\n");
         if (dynamic_cast<Monster*>(target)) { this->gainXP(20); }
         return;
     }
@@ -96,6 +104,7 @@ void Hero::useItem(int index) {
             Utility::printGreen(item->getName());
             Utility::printGreen(" was applied | Healt: +");
             Utility::printGreen(std::to_string(item->getValue()));
+            std::cout << std::endl;
             m_inventory.removeItem(index);
         }
         else if (type == Type::Weapon) {
@@ -106,6 +115,7 @@ void Hero::useItem(int index) {
             Utility::printGreen(item->getName());
             Utility::printGreen(" | Attac Power: +");
             Utility::printGreen(std::to_string(item->getValue()));
+            std::cout << std::endl;
         }
         // else if (item->getType() == Type::Key) {
             // std::cout << m_name << " uses " << item->getName() << " to unlock something!\n";
@@ -119,12 +129,13 @@ void Hero::useItem(int index) {
 void Hero::gainXP(int xp) {
     m_experiencePoints += xp;
     if(m_experiencePoints > Limits::HERO_MAX_XP) m_experiencePoints = Limits::HERO_MAX_XP;
-    if(m_experiencePoints >= 100 && (m_experiencePoints % 100) == 0) levelUp();
+    if(m_experiencePoints >= 100) {
+        levelUp();
+    }
 }
 
 void Hero::levelUp() {
-    ++m_level;
-    //any logic for level up
+    m_level = m_experiencePoints/100 + 1;
 }
 
 void Hero::setMount(Mount* mount) {
@@ -136,11 +147,16 @@ void Hero::setMount(Mount* mount) {
     m_currentMount = mount;
 }
 
+std::vector<std::shared_ptr<Item>> Hero::getItems() {return m_inventory.getItems();}
+
+
 Mount* Hero::getMount() const {return m_currentMount;}
 
 std::string Hero::getDialogue() const {
     return ("Hello I am " + m_name + " \n");
 }
+
+Inventory& Hero::getInventory() {return m_inventory;}
 
 int Hero::getInventorySize() {return m_inventory.getSize();}
 

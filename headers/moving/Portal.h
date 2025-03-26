@@ -17,8 +17,8 @@ class Portal {
     public:
         Portal(const std::string& name, Location source, Location destination, bool locked, 
                const std::string& condition, const std::string& answer = "") ;
-        ~Portal() = default;
-        bool attemptActivation(const std::string& playerInput, Inventory& playerInventory);
+        ~Portal() {std::cout << "~Portal" << std::endl;}
+        bool attemptActivation(const std::string& playerInput /*,Inventory& playerInventory*/);
         Location getSource() const;
         std::string getName() const;
         Location getDestination() const;

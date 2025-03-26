@@ -16,7 +16,7 @@ class Monster : public Character, public Combatable {
         Ability m_specialAbility;
     public:
         Monster(const std::string& name, int health, int attackPower, int defense, const Ability& ability = Ability::None);
-        ~Monster() = default;
+        ~Monster() {std::cout << "~Monster" << std::endl;}
         void displayStats() const override;
         void takeDamage(int damage) override;
         void attack(Character* target) override;

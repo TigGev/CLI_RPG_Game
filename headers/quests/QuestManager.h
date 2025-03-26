@@ -2,9 +2,11 @@
 #define QUESTMANAGER_H
 #include <vector>
 #include "Quest.h"
-#include "../characters/Hero.h"
+// #include "../characters/Hero.h"
 #include <iostream>
 #include <memory>
+
+class Hero;
 
 class QuestManager {
     private:
@@ -12,7 +14,7 @@ class QuestManager {
         std::vector<std::shared_ptr<Quest>> m_completedQuests;
     public:
         QuestManager() = default; 
-        ~QuestManager() = default;
+        ~QuestManager() {std::cout << "~QuestManager" << std::endl;}
         void assignQuest(std::shared_ptr<Quest> quest);
         void checkQuestCompletion();
         void distributeRewards(Hero* hero);

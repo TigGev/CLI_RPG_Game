@@ -5,7 +5,7 @@
 class Character;
 class Interactable {
     public:
-        virtual ~Interactable() = default;
+        virtual ~Interactable() {std::cout << "~Interactable" << std::endl;}
         virtual void interact(Character* target) = 0;
         virtual std::string getDialogue() const = 0;
 };

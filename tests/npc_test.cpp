@@ -80,14 +80,13 @@ TEST_F(NPCTest, GetDialogue) {
     EXPECT_EQ(npc->getDialogue(), "Help me!");
 }
 
-// Тест getAssociatedQuest
-// TEST_F(NPCTest, GetAssociatedQuest) {
-//     auto quest = npc->getAssociatedQuest();
-//     EXPECT_NE(quest, nullptr);
-//     EXPECT_EQ(quest->getDescription(), "Kill the fierce dragon.");
-//     EXPECT_EQ(quest->getTitle(), "Slay the Dragon");
-//     EXPECT_EQ(quest->getXPReward(), 100);
-// }
+TEST_F(NPCTest, GetAssociatedQuest) {
+    auto quest = npc->getAssociatedQuest();
+    EXPECT_NE(quest, nullptr);
+    EXPECT_EQ(quest->getDescription(), "Kill the fierce dragon.");
+    EXPECT_EQ(quest->getTitle(), "Slay the Dragon");
+    EXPECT_EQ(quest->getXPReward(), 100);
+}
 
 int main(int argc, char **argv) {
     auto quest = std::make_shared<Quest>("Slay the Dragon", "Kill the fierce dragon.", 100);

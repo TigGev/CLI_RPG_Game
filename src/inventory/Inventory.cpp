@@ -17,7 +17,7 @@ void Inventory::addItem(std::shared_ptr<Item> item) {
     std::cout << item->getName() << " successfuly added to inventory." << std::endl;
 }
 
-void Inventory::removeItem(int index) {
+void Inventory::removeItem(unsigned long index) {
     if (index < 0 || index >= m_items.size()) {
         Utility::printRed("!Invalid item index.");
         return;
@@ -26,7 +26,7 @@ void Inventory::removeItem(int index) {
     std::cout << "Item has been successfully removed from inventory." << std::endl;
 }
 
-std::shared_ptr<Item> Inventory::getItem(int index) const {
+std::shared_ptr<Item> Inventory::getItem(unsigned long index) const {
     if (index < 0 || index >= m_items.size()) {
         Utility::printRed("!Invalid item index.");
         return nullptr;

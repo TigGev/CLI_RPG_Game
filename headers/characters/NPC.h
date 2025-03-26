@@ -12,7 +12,7 @@ class NPC : public Character, public Interactable {
         std::shared_ptr<Quest> m_associatedQuest;
     public:
         NPC(const std::string& name, const std::string& dialogue, std::shared_ptr<Quest> quest);
-        ~NPC() = default;
+        ~NPC() {std::cout << "~NPC" << std::endl;}
         void displayStats() const override;
         void takeDamage(int damage) override;
         void interact(Character* target) override;
