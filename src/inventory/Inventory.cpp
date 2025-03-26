@@ -29,7 +29,7 @@ void Inventory::removeItem(int index) {
 std::shared_ptr<Item> Inventory::getItem(int index) const {
     if (index < 0 || index >= m_items.size()) {
         Utility::printRed("!Invalid item index.");
-        return;
+        return nullptr;
     }
     return m_items.at(index);
 }

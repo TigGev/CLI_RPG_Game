@@ -8,7 +8,7 @@ Portal::Portal(const std::string& name, Location source, Location destination, b
 
 bool Portal::attemptActivation(const std::string& playerInput, Inventory& playerInventory) {
     if (playerInput == m_activationCondition) {
-        m_isLocked = true;
+        m_isLocked = false;
         return true;
     }
     return false;
