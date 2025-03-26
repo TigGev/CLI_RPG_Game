@@ -1,5 +1,6 @@
 #include "../../headers/gameWorld/GameWorld.h"
 #include "../../headers/gameWorld/Location.h"
+#include "../../headers/utility/Utility.h"
 #include <iostream>
 
 GameWorld::GameWorld(std::shared_ptr<Location> firstLocation) : m_currentLocation(firstLocation) {

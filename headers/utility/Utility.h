@@ -9,9 +9,8 @@ enum class MountType;
 
 namespace Utility {
     int getValidatedInput(int min, int max);
-    void saveGame(const std::string& filename);
-    void loadGame(const std::string& filename);
-    int generateRandom(int min, int max);
+    // void saveGame(const std::string& filename);
+    // void loadGame(const std::string& filename);
     int getExpenseForMount(int distance, MountType type);
     int getPowerReserve(int condition, MountType type);
 

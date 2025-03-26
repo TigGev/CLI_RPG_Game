@@ -2,22 +2,20 @@
 #define QUESTMANAGER_H
 #include <vector>
 #include "Quest.h"
+#include "../characters/Hero.h"
 #include <iostream>
-// class Quest;
+#include <memory>
 
 class QuestManager {
     private:
-        std::vector<Quest*> activeQuests;
-        std::vector<Quest*> completedQuests;
+        std::vector<std::shared_ptr<Quest>> m_activeQuests;
+        std::vector<std::shared_ptr<Quest>> m_completedQuests;
     public:
-        QuestManager() {}; ///////////////
-        ~QuestManager() {}; /////////////////
-        void assignQuest(Quest* quest) { ///////////////
-           std::cout << "Quest assigned: " << quest->getDescription() << "\n";
-        } //////////////
+        QuestManager() = default; 
+        ~QuestManager() = default;
+        void assignQuest(std::shared_ptr<Quest> quest);
         void checkQuestCompletion();
-        void distributeRewards();
-        // void assignQuest(Quest* quest);
-        std::vector<Quest*> getActiveQuests() const;
+        void distributeRewards(Hero* hero);
+        std::vector<std::shared_ptr<Quest>> getActiveQuests() const;
 };
 #endif

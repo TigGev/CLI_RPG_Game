@@ -2,8 +2,9 @@
 #define GAMEWORLD_H
 #include <vector>
 #include <memory>
+#include "Location.h"
 
-class Location;
+// class Location;
 
 class GameWorld {
     private:

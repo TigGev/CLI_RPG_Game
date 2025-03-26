@@ -1,4 +1,5 @@
 #include "../../headers/gameWorld/Location.h"
+#include "../../headers/moving/Portal.h"
 #include <iostream>
 #include "../../headers/utility/Utility.h"
 

@@ -8,7 +8,7 @@
 
 // class NPC;
 
-Hero::Hero(const std::string& name, int health, int attackPower, int defense, QuestManager* qm) 
+Hero::Hero(const std::string& name, int health, int attackPower, int defense, QuestManager qm) 
     : Character(name, health, attackPower, defense) {
         if (health < 0) m_health = 0;
         if (attackPower < 1) m_attackPower = 1;
@@ -56,7 +56,7 @@ void Hero::interact(Character* target) {
         if (inp == 1) {
             std::cout << "Quest accepted!" << std::endl;
             std::cout << npc->getAssociatedQuest()->getDescription() << std::endl;
-            m_qm->assignQuest(npc->getAssociatedQuest());
+            m_qm.assignQuest(npc->getAssociatedQuest());
         }
     }
     // to be continued
@@ -82,12 +82,12 @@ void Hero::attack(Character* target) {
     std::cout << target->getName() << "'s healt: "  << target->getHealt() << std::endl;
 }
 
-void Hero::addItem(Item* item) {
+void Hero::addItem(std::shared_ptr<Item> item) {
     m_inventory.addItem(item);
 }
 
 void Hero::useItem(int index) {
-    Item* item = m_inventory.getItem(index); 
+    std::shared_ptr<Item> item = m_inventory.getItem(index); 
     if (item) { //if the index is incorrect the function will retun nullptr
         const Type type = item->getType();
         if (type == Type::Potion) {

@@ -1,13 +1,12 @@
 #ifndef LOCATION_H
 #define LOCATION_H
 #include "../characters/Character.h"
-#include "../moving/Portal.h"
 #include <string>
 #include <vector>
 #include <memory>
 
 // class Character;
-// class Portal;
+class Portal;
 
 class Location {
     private:

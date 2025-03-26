@@ -1,26 +1,24 @@
 #ifndef QUEST_H
 #define QUEST_H
 #include <string>
-
-class Item;
+#include "../inventory/Item.h"
 
 class Quest {
     private:
-        std::string title;
-        std::string description;
-        bool isCompleted;
-        int xpReward;
-        Item* itemReward;
+        std::string m_title;
+        std::string m_description;
+        bool m_isCompleted;
+        int m_xpReward;
+        std::shared_ptr<Item> m_itemReward;
     public:
-        Quest(const std::string& title, const std::string& description, int xpReward, Item* itemReward = nullptr) {}; ///
-        ~Quest() {}; ////////////////
-        Quest(const std::string& desc) : description(desc) {} ///////
-        std::string getDescription() const { return description; } ///////
+        Quest(const std::string& title, const std::string& description, int xpReward, std::shared_ptr<Item> itemReward = nullptr);
+        ~Quest() {}; 
+        // Quest(const std::string& desc);
         void complete();
+        std::string getDescription() ;
         bool isQuestCompleted() const;
         std::string getTitle() const;
-        // std::string getDescription() const;
         int getXPReward() const;
-        Item* getItemReward() const;
+        std::shared_ptr<Item> getItemReward() const;
 };
 #endif

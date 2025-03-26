@@ -11,14 +11,13 @@
 class Hero : public Character, public Interactable, public Combatable {
     private:
         Inventory m_inventory;
-        // std::vector<std::string> m_skills;
         int m_experiencePoints;
         int m_level = 1;
         Mount* m_currentMount = nullptr;
-        QuestManager* m_qm;
+        QuestManager m_qm; 
 
     public:
-        Hero(const std::string& name, int health, int attackPower, int defense, QuestManager* qm);
+        Hero(const std::string& name, int health, int attackPower, int defense, QuestManager qm);
         ~Hero();
         void displayStats() const override;
         void takeDamage(int damage) override;
@@ -26,7 +25,7 @@ class Hero : public Character, public Interactable, public Combatable {
         std::string getDialogue() const override;
         void attack(Character* target) override;
         void useAbility(Character* target) override {};
-        void addItem(Item* item);
+        void addItem(std::shared_ptr<Item> item);
         void useItem(int index);
         void gainXP(int xp);
         void levelUp();
