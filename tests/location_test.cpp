@@ -87,7 +87,7 @@ TEST(LocationTest, PortalActivationSuccess) {
     Inventory inventory;
 
     source.addPortal(portal);
-    bool activated = portal->attemptActivation("password", inventory);
+    bool activated = portal->attemptActivation("password" /*,inventory*/);
     EXPECT_TRUE(activated);
     EXPECT_FALSE(portal->isPortalLocked());
 }
@@ -99,7 +99,7 @@ TEST(LocationTest, PortalActivationFailure) {
     Inventory inventory;
 
     source.addPortal(portal);
-    bool activated = portal->attemptActivation("wrong", inventory);
+    bool activated = portal->attemptActivation("wrong" /*,inventory*/);
     EXPECT_FALSE(activated);
     EXPECT_TRUE(portal->isPortalLocked());
 }
