@@ -13,7 +13,7 @@ class Hero : public Character, public Interactable, public Combatable {
         Inventory m_inventory;
         int m_experiencePoints;
         int m_level = 1;
-        Mount* m_currentMount = nullptr;
+        std::shared_ptr<Mount> m_currentMount = nullptr;
         QuestManager m_qm; 
 
     public:
@@ -29,9 +29,9 @@ class Hero : public Character, public Interactable, public Combatable {
         void useItem(int index);
         void gainXP(int xp);
         void levelUp();
-        void setMount(Mount* mount);
+        void setMount(std::shared_ptr<Mount> mount);
         std::vector<std::shared_ptr<Item>> getItems();
-        Mount* getMount() const;
+        std::shared_ptr<Mount>getMount() const;
         std::vector<std::shared_ptr<Quest>> getActiveQuests();
         Inventory& getInventory();
         int getInventorySize();

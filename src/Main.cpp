@@ -68,8 +68,9 @@ int main() {
     qm.distributeRewards(&hero);
 
     std::cout << "\nMounting a horse...\n";
-    Horse horse("Thunderbolt");
-    hero.setMount(&horse);
+    auto horse = std::make_shared<Horse>("Thunderbolt");
+
+    hero.setMount(horse);
     hero.getMount()->useMount(100);
 
     std::cout << "\nAdvancing time...\n";

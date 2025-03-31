@@ -138,19 +138,18 @@ void Hero::levelUp() {
     m_level = m_experiencePoints/100 + 1;
 }
 
-void Hero::setMount(Mount* mount) {
+void Hero::setMount(std::shared_ptr<Mount> mount) {
     if (!mount) {
         Utility::printRed("Unknown Mount\n");
         return;
     }
-    delete m_currentMount;
     m_currentMount = mount;
 }
 
 std::vector<std::shared_ptr<Item>> Hero::getItems() {return m_inventory.getItems();}
 
 
-Mount* Hero::getMount() const {return m_currentMount;}
+std::shared_ptr<Mount> Hero::getMount() const {return m_currentMount;}
 
 std::string Hero::getDialogue() const {
     return ("Hello I am " + m_name + " \n");
