@@ -1,7 +1,7 @@
 # Adventure Quest - CLI RPG Game
 
 [![C++](https://img.shields.io/badge/language-C++-blue.svg)](https://isocpp.org/)
-[![License: MIT](CLI_RPG_Game)](https://github.com/TigGev/CLI_RPG_Game/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/TigGev/CLI_RPG_Game/blob/main/LICENSE)
 [![GitHub repo size](https://img.shields.io/github/repo-size/TigGev/CLI_RPG_Game)](https://github.com/TigGev/CLI_RPG_Game)
 [![GitHub issues](https://img.shields.io/github/issues/TigGev/CLI_RPG_Game)](https://github.com/TigGev/CLI_RPG_Game/issues)
 [![GitHub stars](https://img.shields.io/github/stars/TigGev/CLI_RPG_Game)](https://github.com/TigGev/CLI_RPG_Game/stargazers)
